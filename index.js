@@ -81,6 +81,8 @@ app.post('/update/new', async (req, res) => {
   }
 });
 
+
+
 app.listen(config.port, () => {
   console.log("Server running on port - " + config.port);
   console.log(`Made By ${config.copyright}`);
