@@ -2,7 +2,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const ejs = require("ejs");
 const config = require('./config.json');
-
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const express = require('express');
 
 // View engines & others
