@@ -1,0 +1,8 @@
+[build]
+command = "npm run start"
+publish="/start"
+base = "/"
+[[redirects]]
+from = "/*"
+to = "/index.ejs"
+status = 200
