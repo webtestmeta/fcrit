@@ -20,7 +20,7 @@ app.set('json spaces', 1);
 // Pages
 app.get('/', (req, res) => {
   res.render('index', {
-    title: "Home"
+    title: "FCRIT - Campus Service - Railway Concession, Bona fide Certificate, Internship Permission, and LoR Eligibility."
   });
 });
 
