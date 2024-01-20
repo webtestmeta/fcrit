@@ -25,18 +25,6 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/update/:id', (req, res) => {
-  const user = req.params.id;
-  res.render('update', {
-    title: "Home",
-    user : user
-  });
-});
-
-
-
-
-
 // Send route
 app.post('/update/new', async (req, res) => {
   try {
