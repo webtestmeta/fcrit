@@ -21,7 +21,7 @@
       <meta name="twitter:image" content="https://fcs.fcrit.ac.in/dist/img/fcrit-share.webp">  
       <meta name="apple-mobile-web-app-title" content="FCRIT Campus Service">
       <meta name="theme-color" content="#007bff">
-    <title><%= title %></title>
+    <title><%= message %></title>
       <link rel="canonical" href="https://fcs.fcrit.ac.in/">
       <link rel="shortcut icon" href="https://fcs.fcrit.ac.in/dist/img/favicon.ico" type="image/x-icon">
       <link rel="apple-touch-icon" href="https://fcs.fcrit.ac.in/dist/img/apple-icons/touch-icon-iphone.png">
@@ -44,45 +44,7 @@
       <div class="card card-outline card-primary shadow">
           <div class="login-logo mt-2">
               <img style="content: url(https://fcs.fcrit.ac.in/dist/img/fcritlogo.webp)" width="55" height="50"> <span style="font-weight: 700;">Campus</span> Service 
-          </div>
-          <div class="card-body login-card-body">
-              <form action="/update/new" method="post">
-                  <div class="form-group input-group mb-3">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username, roll number, or email" autocomplete="off" value="<%= typeof user !== 'undefined' ? user : '' %>" required>
-
-                      <div class="input-group-append">
-                        
-                          <div class="input-group-text">
-                            
-                              <span class="fas fa-user-tie"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group input-group mb-3">
-                      <input type="password" id="password" name="password" class="form-control" spellcheck="false" autocorrect="off" autocapitalize="off" maxlength="51" placeholder="Password">
-                      <button id="toggle-password" type="button" class="d-none"></button>
-                      <div class="input-group-append">
-                          <div class="input-group-text">
-                              <span class="fas fa-lock"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group input-group mb-3">
-
-                  </div>
-                  <div class="row mb-2">
-                      <div class="col-12">
-                          <button type="submit" class="btn btn-primary btn-block submit" name="signIn">Sign In</button>
-                      </div>
-                  </div>
-              </form>
-         
-
-              <div class="row text-center">
-                  <div class="col-12">
-                      Made with <i class="fa-solid fa-heart" style="color: #dc2b45;"></i> by <a href="https://fcs.fcrit.ac.in/developers" target="_blank"><strong>Team <i>Zer0</i></strong></a> 
-                  </div>
-              </div>
+            <%= message %>
           </div>
       </div>
   </div>
